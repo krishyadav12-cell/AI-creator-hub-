@@ -1,0 +1,5 @@
+{
+  "name": "AI Creator Hub",
+  "description": "Advanced AI hub with Chatbot, Image Generator, Prompt Enhancer, Social Hub, Auto Channel Growth, Song & Voice Studio, and AI Video Generator (Kling AI).",
+  "requestFramePermissions": ["camera", "microphone", "geolocation"]
+}

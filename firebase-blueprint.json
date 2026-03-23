@@ -1,0 +1,60 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user information and subscription status.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "description": "User email" },
+        "displayName": { "type": "string", "description": "User display name" },
+        "photoURL": { "type": "string", "description": "User photo URL" },
+        "plan": { "type": "string", "enum": ["free", "basic", "premium"], "description": "Subscription plan: basic (₹50), premium (₹100)" },
+        "selectedTool": { "type": "string", "description": "The single tool selected for basic plan users" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastDailyReset": { "type": "string", "format": "date-time", "description": "Last time daily limits were reset" },
+        "dailyUsageCount": { "type": "integer", "description": "Number of generations today" }
+      },
+      "required": ["uid", "email", "plan"]
+    },
+    "Chat": {
+      "title": "Chat Message",
+      "description": "A single message in a chat thread.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "model"] },
+        "content": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "role", "content", "timestamp"]
+    },
+    "GeneratedFile": {
+      "title": "Generated Asset",
+      "description": "Metadata for AI-generated images, videos, or audio.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "type": { "type": "string", "enum": ["image", "video", "audio"] },
+        "url": { "type": "string", "description": "URL to the generated asset" },
+        "prompt": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "type", "url", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile and subscription data"
+    },
+    "/users/{userId}/chats/{chatId}": {
+      "schema": "Chat",
+      "description": "User chat history"
+    },
+    "/users/{userId}/generated_files/{fileId}": {
+      "schema": "GeneratedFile",
+      "description": "History of generated assets"
+    }
+  }
+}
